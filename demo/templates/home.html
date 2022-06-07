@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <h1>כלי לעדכון מפות פארק קרסו</h1>
+{% endblock %}
+
+{% block buttons %}
+    <div class="buttons">
+
+        <button id="Turkish_0" class="button" onclick="document.location='/Turkish_0'">טורקי 0</button>
+        <button id="Turkish_1" class="button" onclick="document.location='/Turkish_1'">טורקי 1</button>
+        <button id="Gallery_minus_1" class="button" onclick="document.location='/Gallery_minus_1'">גלריה
+            -1
+        </button>
+        <button id="Lobby_minus_1" class="button" onclick="document.location='/Lobby_minus_1'">לובי -1
+        </button>
+        <button id="Outside" class="button" onclick="document.location='/Outside'">חלל חיצוני</button>
+        <button id="minus_2" class="button" onclick="document.location='/Minus_2'">קומה -2</button>
+        <button id="Back_2nd_floor" class="button" onclick="document.location='/Back_2nd_floor'">אחורי קומה2</button>
+
+        :בחר קומה
+
+    </div>
+{% endblock %}
+{% block forms %}
+    <br><br>
+    <img src="/static/park_image.jpg" alt="" style="height:450px; width:550px;" class="image"/>
+{% endblock %}
+
+{% block Table %}
+
+{% endblock %}

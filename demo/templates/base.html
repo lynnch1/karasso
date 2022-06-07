@@ -1,0 +1,161 @@
+<html>
+<head>
+    <link rel="stylesheet" href="/static/CSS/base.css">
+
+    <script>
+        // Cursor coordinate functions
+        var myX, myY, xyOn, myMouseX, myMouseY;
+        xyOn = true;
+
+        function getXYPosition(e) {
+            myMouseX = (e || event).clientX;
+            myMouseY = (e || event).clientY;
+            if (document.documentElement.scrollTop > 0) {
+                myMouseY = myMouseY + document.documentElement.scrollTop;
+            }
+            if (xyOn) {
+                alert("X is " + myMouseX + "\nY is " + myMouseY);
+            }
+        }
+
+        function toggleXY() {
+            xyOn = !xyOn;
+            document.getElementById('xyLink').blur();
+            return false;
+        }
+    </script>
+    <script type="text/javascript">
+        document.onmouseup = getXYPosition;
+    </script>
+    <script>
+        function showImage_db() {
+            console.log(x_pos, y_pos)
+            var image = document.getElementById('myImage');
+            var newImage = document.createElement("span");
+            newImage.innerHTML = name
+            newImage.style.position = "absolute";
+            newImage.style.fontSize = 11+"px";
+            newImage.style.wordSpacing = 999999 + "px";
+            newImage.style.left = x_pos + "px";
+            newImage.style.fontWeight = "bold";
+            newImage.style.color = "RebeccaPurple";
+            newImage.style.top = y_pos + "px";
+
+            document.body.appendChild(newImage);
+        }
+    </script>
+
+    <script>
+
+        window.onload = function locate() {
+            {% for location in locations %}
+                x_pos = {{ location['x_pos'] }}
+                    y_pos = {{ location['y_pos'] }}
+                        name = '{{ location['name'] }}'
+                showImage_db();
+
+            {% endfor %}
+        }
+    </script>
+
+    <style>
+        .overlays {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<a href="#" id="xyLink" onfocus="toggleXY();" accesskey="z"></a>
+
+{% block buttons %}
+{% endblock %}
+
+<div class="together">
+    <div class="pic">
+        {% block floor_image %}
+
+        {% endblock %}
+    </div>
+
+    <div class="table">
+        {% block Table %}
+            <table border="1">
+
+                    <div class="buttons">
+
+                        <button id="Turkish_0" class="button" onclick="document.location='/Turkish_0'">טורקי 0</button>
+                        <button id="Turkish_1" class="button" onclick="document.location='/Turkish_1'">טורקי 1</button>
+                        <button id="Gallery_minus_1" class="button" onclick="document.location='/Gallery_minus_1'">גלריה
+                            -1
+                        </button>
+                        <button id="Lobby_minus_1" class="button" onclick="document.location='/Lobby_minus_1'">לובי -1
+                        </button>
+                        <button id="Outside" class="button" onclick="document.location='/Outside'">חלל חיצוני</button>
+                        <button id="minus_2" class="button" onclick="document.location='/Minus_2'">קומה -2</button>
+                        <button id="Back_2nd_floor" class="button" onclick="document.location='/Back_2nd_floor'">אחורי קומה2</button>
+
+                        :בחר קומה
+
+                    </div>
+
+                <tr>
+                    {% block title %}
+                        {% for details in details %}
+                            <h3>{{ details['floor_name'] }} :קומה </h3>
+                        {% endfor %}
+                    {% endblock %}
+                </tr>
+
+                <tr>
+                    <th> Y</th>
+                    <th> X</th>
+                    <th>שם החלל</th>
+                </tr>
+                {% for location in locations %}
+                    <tr>
+                        <td>{{ location['y_pos'] }}</td>
+                        <td>{{ location['x_pos'] }}
+                        <td>{{ location['name'] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    </div>
+</div>
+
+
+{% block forms %}
+    {% for details in details %}
+
+        <form id="change_name" method="post" action="/change_name">
+            <div>
+                <p><b class="title">:שנה שם חלל</b></p>
+            </div>
+            <input type="submit" value="שנה שם">
+            <input type="text" name="new_name" placeholder="הזן את השם אליו תרצה לשנות">:שם חדש
+            <input type="text" id="y_pos" name="y_pos" placeholder=" קיימת Y הזן קורדינטת">:Y
+            <input type="text" id="x_pos" name="x_pos" placeholder=" קיימת X הזן קורדינטת">:X
+            <input type="hidden" name="floor_name" id="floor_name" value="{{ details['floor_name'] }}">
+
+            {{ message }}
+
+        </form>
+
+        <form id="change_location" method="post" action="/change_location">
+            <div>
+                <p><b class="title">:שנה מיקום חלל</b></p>
+            </div>
+            <input type="submit" value="שנה מיקום">
+            <input type="text" id="y_pos" name="y_pos" placeholder="חדשה Y הזן קורדינטת">:Y
+            <input type="text" id="x_pos" name="x_pos" placeholder=" חדשה X הזן קורדינטת ">:X
+            <input type="text" id="name" name="name" placeholder="הזן את השם החלל שאת מיקומו תרצה לשנות">:שם
+            <input type="hidden" name="floor_name" value="{{ details['floor_name'] }}">
+
+            {{ message1 }}
+
+        </form>
+    {% endfor %}
+{% endblock %}
+
+</body>
+</html>

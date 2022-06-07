@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block floor_image %}
+    {% for details in details %}
+        <img src="{{ details['image'] }}" alt="Outside" style="height:640px; width:610px" class="image"/>
+    {% endfor %}
+{% endblock %}
